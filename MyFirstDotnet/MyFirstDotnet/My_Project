@@ -1,0 +1,67 @@
+CREATE DATABASE PRODUCTINVENTORYSYSTEMDB
+
+CREATE TABLE Product
+(
+Id INT identity PRIMARY KEY,
+productName NVARCHAR(50) NOT NULL,
+productPrice DECIMAL NOT NULL,
+productQuantity INT NOT NULL, 
+productWarranty NVARCHAR(1) NOT NULL
+
+);
+
+ALTER TABLE Product
+ADD manufacturerId INT REFERENCES manufacturer(manufacturerId)
+
+CREATE PROCEDURE storeProcedure
+(
+@productName NVARCHAR(50),
+@productPrice DECIMAL,
+@productQuantity INT (10),
+@productWarranty NVARCHAR NULL
+);
+
+AS 
+BEGIN
+    INSERT INTO Product(productName, productPrice, productQuantity, productWarranty)
+    VALUES(productName, productPrice, productQuantity, productWarranty)
+END 
+
+CREATE TABLE manufacturer(
+   manufactId INT IDENTITY(1, 1) PRIMARY KEY,
+    manufacturerName VARCHAR(50) NOT NULL,
+    manufacturerCountry NVARCHAR(25) NULL
+);
+
+(
+CREATE PROCEDURE storeManufacturer
+(
+    @manufacturerName VARCHAR(50),
+    @manufacturerCountry NVARCHAR(25),
+);
+
+AS 
+BEGIN   
+    INSERT INTO manufacturer(manufacturerName, manufacturerCountry)
+    VALUE(@manufacturerName, @manufacturerCountry)
+END
+
+CREATE TABLE quantity(
+    quanId INT IDENTITY(1, 1) PRIMARY KEY,
+   quantityNumber INT,
+    productId INT
+
+    FOREIGN KEY(productId) REFERENCES product(productId)
+);
+
+
+CREATE PROCEDURE storeQuantity
+(
+    @quantityNumber INT
+);
+
+AS 
+BEGIN
+    INSERT INTO Quantity(quantityNumber)
+    VALUES(@quantityNumber)
+END
